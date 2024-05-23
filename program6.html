@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="ToDoApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body ng-controller="ToDoController">
+    <h2>To-Do List</h2>
+    <div>
+      <input type="text" ng-model="newTask" placeholder="Add a new task" />
+      <button ng-click="addTask()">Add</button>
+    </div>
+    <ul>
+      <li ng-repeat="task in tasks">
+        {{ task.name }}
+        <span ng-show="task.editing">
+          <input type="text" ng-model="task.name" ng-blur="saveTask(task)" />
+        </span>
+        <span ng-show="!task.editing">
+          <button ng-click="editTask(task)">Edit</button>
+          <button ng-click="removeTask(task)">Delete</button>
+        </span>
+      </li>
+    </ul>
+    <script>
+      var app = angular.module("ToDoApp", []);
+      app.controller("ToDoController", function ($scope) {
+        $scope.tasks = [];
+        $scope.addTask = function () {
+          if ($scope.newTask) {
+            $scope.tasks.push({ name: $scope.newTask, editing: false });
+            $scope.newTask = "";
+          }
+        };
+        $scope.editTask = function (task) {
+          task.editing = true;
+        };
+        $scope.saveTask = function (task) {
+          task.editing = false;
+        };
+        $scope.removeTask = function (task) {
+          const index = $scope.tasks.indexOf(task);
+          if (index !== -1) {
+            $scope.tasks.splice(index, 1);
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Student Details with CGPA</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  <body ng-app="myApp">
+    <div ng-controller="myController">
+      <h2>Student Details</h2>
+      <p>Total number of students: {{ students.length }}</p>
+      <table border="1">
+        <tr>
+          <th>SLNO</th>
+          <th>Name</th> 
+          <th>CGPA</th>
+          <th>Action</th>
+        </tr>
+        <tr ng-repeat="student in students">
+          <td>{{$index + 1}}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.cgpa }}</td>
+          <td><button ng-click="deleteStudent($index)">Delete</button></td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      var app = angular.module("myApp", []);
+      app.controller("myController", function ($scope) {
+        $scope.students = [
+          { name: "Athri", cgpa: 9.8 },
+          { name: "Nachiketh", cgpa: 9.2 },
+          { name: "Mary Disoza", cgpa: 9.5 },
+          { name: "Md. Bilal", cgpa: 9.4 },
+          { name: "Md. Bilal", cgpa: 9.4 },
+          
+          // Add more students if needed
+        ];
+        $scope.deleteStudent = function (index) {
+          $scope.students.splice(index, 1);
+
+        };
+      });
+    </script>
+  </body>
+</html>
